@@ -145,6 +145,32 @@
             color: #F57F17;
         }
 
+        /* TypeForm Assessment Container */
+        #assessment-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-light);
+            margin: 30px 0;
+            min-height: 600px; /* Ensure container has height */
+        }
+
+        /* TypeForm Responsive Styling */
+        [data-tf-live] {
+            min-height: 500px;
+            width: 100%;
+            border: none;
+        }
+
+        /* TypeForm Loading Indicator */
+        .tf-loading {
+            text-align: center;
+            color: var(--secondary-blue);
+            padding: 20px;
+            font-style: italic;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
@@ -195,12 +221,23 @@
                 <li>🔒 Veilig & vertrouwelijk</li>
             </ul>
 
-            <a href="#start-assessment" class="cta-button">Start Assessment Nu</a>
+            <a href="#start-assessment" class="cta-button" onclick="showAssessment()">Start Assessment Nu</a>
+
+            <!-- TypeForm Assessment Embed - Direct Visible -->
+            <div id="assessment-container" style="margin: 30px 0;">
+                <h3 style="color: var(--primary-blue); text-align: center; margin-bottom: 20px;">
+                    🎯 Start je Assessment Hier:
+                </h3>
+                <div data-tf-live="01K1T6PZQ032KFF5194CA0NJDA"></div>
+            </div>
 
             <div class="warning-box">
                 ⚠️ <strong>Assessment niet zichtbaar?</strong><br>
                 Probeer je adblocker uit te schakelen of gebruik Incognito mode.
             </div>
+
+            <!-- TypeForm Script Loading -->
+            <script src="//embed.typeform.com/next/embed.js"></script>
         </div>
     </div>
 
@@ -209,13 +246,48 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Recruitment APK Assessment geladen');
             
-            // Add your assessment functionality here
-            document.querySelector('.cta-button').addEventListener('click', function(e) {
-                e.preventDefault();
-                // Start assessment process
-                alert('Assessment wordt gestart...');
-            });
+            // Check if TypeForm loaded
+            setTimeout(function() {
+                const tfContainer = document.querySelector('[data-tf-live]');
+                if (tfContainer && !tfContainer.innerHTML.trim()) {
+                    console.warn('TypeForm mogelijk niet geladen - check adblocker');
+                    showFallbackMessage();
+                }
+            }, 3000);
         });
+
+        // Show TypeForm Assessment (scroll to it)
+        function showAssessment() {
+            // Smooth scroll to assessment
+            document.getElementById('assessment-container').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+            
+            // Track conversion event
+            console.log('Assessment gestart - scroll naar TypeForm');
+        }
+
+        // Fallback if TypeForm doesn't load
+        function showFallbackMessage() {
+            const container = document.getElementById('assessment-container');
+            container.innerHTML = `
+                <div class="tf-loading">
+                    <h3>Assessment wordt geladen...</h3>
+                    <p>Als het assessment niet verschijnt:</p>
+                    <ul style="text-align: left; max-width: 400px; margin: 0 auto;">
+                        <li>Schakel je adblocker uit</li>
+                        <li>Gebruik Incognito/Private browsing</li>
+                        <li>Herlaad de pagina</li>
+                    </ul>
+                    <br>
+                    <a href="https://wouterapps.typeform.com/to/01K1T6PZQ032KFF5194CA0NJDA" 
+                       target="_blank" 
+                       class="cta-button">
+                       Open Assessment in Nieuw Venster
+                    </a>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
