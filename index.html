@@ -223,10 +223,10 @@
 
             <a href="#start-assessment" class="cta-button" onclick="showAssessment()">Start Assessment Nu</a>
 
-            <!-- TypeForm Assessment Embed - Direct Visible -->
-            <div id="assessment-container" style="margin: 30px 0;">
+            <!-- TypeForm Assessment Embed - Hidden until button click -->
+            <div id="assessment-container" style="display: none; margin: 30px 0;">
                 <h3 style="color: var(--primary-blue); text-align: center; margin-bottom: 20px;">
-                    🎯 Start je Assessment Hier:
+                    🎯 Jouw Assessment:
                 </h3>
                 <div data-tf-live="01K1T6PZQ032KFF5194CA0NJDA"></div>
             </div>
@@ -245,26 +245,35 @@
         // Recruitment APK Assessment Logic
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Recruitment APK Assessment geladen');
-            
-            // Check if TypeForm loaded
-            setTimeout(function() {
-                const tfContainer = document.querySelector('[data-tf-live]');
-                if (tfContainer && !tfContainer.innerHTML.trim()) {
-                    console.warn('TypeForm mogelijk niet geladen - check adblocker');
-                    showFallbackMessage();
-                }
-            }, 3000);
         });
 
-        // Show TypeForm Assessment (scroll to it)
+        // Show TypeForm Assessment when button clicked
         function showAssessment() {
+            const container = document.getElementById('assessment-container');
+            const button = document.querySelector('.cta-button');
+            
+            // Hide the CTA button
+            button.style.display = 'none';
+            
+            // Show TypeForm container
+            container.style.display = 'block';
+            
             // Smooth scroll to assessment
-            document.getElementById('assessment-container').scrollIntoView({ 
+            container.scrollIntoView({ 
                 behavior: 'smooth' 
             });
             
+            // Check if TypeForm loaded after showing
+            setTimeout(function() {
+                const tfContainer = container.querySelector('[data-tf-live]');
+                if (tfContainer && !tfContainer.innerHTML.trim()) {
+                    console.warn('TypeForm mogelijk niet geladen - toon fallback');
+                    showFallbackMessage();
+                }
+            }, 3000);
+            
             // Track conversion event
-            console.log('Assessment gestart - scroll naar TypeForm');
+            console.log('Assessment gestart - TypeForm wordt getoond');
         }
 
         // Fallback if TypeForm doesn't load
