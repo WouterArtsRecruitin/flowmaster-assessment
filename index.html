@@ -195,37 +195,44 @@
                 <li>🔒 Veilig & vertrouwelijk</li>
             </ul>
 
-            <!-- Working TypeForm Button -->
-            <a href="https://form.typeform.com/to/01K1NMW88R07HZ4FTC370FJZV9" 
-               target="_blank" 
-               class="cta-button">
-               Start Assessment Nu
-            </a>
-            
-            <!-- Embedded TypeForm Option -->
-            <div style="margin: 30px 0; text-align: center;">
-                <p style="color: var(--text-color); margin-bottom: 15px;">
-                    <strong>Of vul direct hieronder in:</strong>
-                </p>
-                <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); min-height: 500px;">
-                    <div data-tf-live="01K1NMW88R07HZ4FTC370FJZV9"></div>
-                    <script src="//embed.typeform.com/next/embed.js"></script>
-                </div>
+            <!-- Start Assessment Button -->
+            <a href="#" class="cta-button" onclick="startAssessment()">Start Assessment Nu</a>
+
+            <!-- TypeForm Container - Hidden Initially -->
+            <div id="typeform-container" style="display: none; margin: 30px 0; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                <h3 style="color: var(--primary-blue); text-align: center; margin-bottom: 20px;">🎯 Jouw Recruitment Assessment:</h3>
+                <div data-tf-live="01K1JZVJTG0RPMBGQR0J9DXSC1"></div>
+                <script src="//embed.typeform.com/next/embed.js"></script>
             </div>
 
             <div class="warning-box">
-                ✅ <strong>Assessment beschikbaar op 2 manieren:</strong><br>
-                1. Klik button hierboven (nieuw venster)<br>
-                2. Vul direct hieronder in (embedded)
+                ⚠️ <strong>Assessment niet zichtbaar?</strong><br>
+                Probeer je adblocker uit te schakelen of gebruik Incognito mode.
             </div>
         </div>
     </div>
 
     <script>
-        // Minimal Recruitment APK - No Complex JavaScript
+        // Recruitment APK - Show TypeForm on Button Click
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Recruitment APK geladen - Direct assessment beschikbaar');
+            console.log('Recruitment APK geladen - landingspagina zichtbaar');
         });
+
+        // Start Assessment Function
+        function startAssessment() {
+            // Hide the CTA button
+            document.querySelector('.cta-button').style.display = 'none';
+            
+            // Show TypeForm container
+            document.getElementById('typeform-container').style.display = 'block';
+            
+            // Smooth scroll to TypeForm
+            document.getElementById('typeform-container').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+            
+            console.log('TypeForm getoond na button click');
+        }
     </script>
 </body>
 </html>
